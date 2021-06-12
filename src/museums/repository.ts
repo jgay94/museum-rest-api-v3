@@ -1,13 +1,14 @@
-import { IMuseumRepository, Museum } from "./types.ts";
+import { IMuseumRepository, Museum } from "./mod.ts";
 
 export class Repository implements IMuseumRepository {
-  private storage = new Map<string, Museum>();
+  storage = new Map<string, Museum>();
 
   async findAll() {
     return [...this.storage.values()];
   }
 
   async findOne(id: string) {
-    return this.storage.get(id);
+    const museum = this.storage.get(id);
+    return museum ?? Promise.reject(new Error("Museum not found"));
   }
 }

@@ -1,4 +1,4 @@
-import { IMuseumRepository, IMuseumService } from "./types.ts";
+import { IMuseumRepository, IMuseumService, Museum } from "./mod.ts";
 
 interface IServiceDependencies {
   museumRepository: IMuseumRepository;
@@ -12,10 +12,12 @@ export class Service implements IMuseumService {
   }
 
   async findAll() {
+    console.log("Getting all museums...");
     return await this.museumRepository.findAll();
   }
 
-  // async findOne(id: string) {
-  //   return await this.museumRepository.findOne(id);
-  // }
+  async findOne(id: string) {
+    console.log(`Getting museum by id: ${id}`);
+    return await this.museumRepository.findOne(id);
+  }
 }
