@@ -10,5 +10,10 @@ export type Museum = {
 
 export interface IMuseumService {
   findAll: () => Promise<Museum[]>;
-  findOne: (id: string) => Promise<Museum>;
+  // findOne: (id: string) => Promise<Museum>;
+}
+
+export interface IMuseumRepository {
+  findAll: () => Promise<Museum[]>;
+  // findOne: (id: string) => Promise<Museum>;
 }

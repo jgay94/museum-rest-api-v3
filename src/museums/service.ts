@@ -1,12 +1,21 @@
-// deno-lint-ignore-file require-await
-import { IMuseumService } from "./types.ts";
+import { IMuseumRepository, IMuseumService } from "./types.ts";
+
+interface IServiceDependencies {
+  museumRepository: IMuseumRepository;
+}
 
 export class Service implements IMuseumService {
-  async findAll() {
-    return [];
+  museumRepository: IMuseumRepository;
+
+  constructor({ museumRepository }: IServiceDependencies) {
+    this.museumRepository = museumRepository;
   }
 
-  async findOne(id: string) {
-    // ...
+  async findAll() {
+    return await this.museumRepository.findAll();
   }
+
+  // async findOne(id: string) {
+  //   return await this.museumRepository.findOne(id);
+  // }
 }
