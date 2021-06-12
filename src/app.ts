@@ -1,5 +1,4 @@
-import * as http from "https://deno.land/std/http/server.ts";
-import { ServerRequest } from "https://deno.land/std/http/server.ts";
+import { bootstrap } from "./web/server.ts";
 import {
   Repository as MuseumRepository,
   Service as MuseumService,
@@ -7,7 +6,6 @@ import {
 
 const PORT = 8080;
 const HOSTNAME = "0.0.0.0";
-const server = http.serve({ port: PORT, hostname: HOSTNAME });
 
 const museumRepository = new MuseumRepository();
 const museumService = new MuseumService({ museumRepository });
@@ -36,21 +34,9 @@ const museumService = new MuseumService({ museumRepository });
 //   await museumService.findAll(),
 // );
 
-console.log(`Server now running at http://${HOSTNAME}:${PORT}`);
-
-function handleMuseums(request: ServerRequest) {
-  request.respond({ body: JSON.stringify({ museums: [] }), status: 200 });
-}
-
-for await (const request of server) {
-  // const params = new URLSearchParams(request.url.substr(1));
-  // const name = params.get("name");
-
-  if (request.url === "/api/museums" && request.method === "GET") {
-    handleMuseums(request);
-    continue;
-  }
-
-  // request.respond({ body: `Hello ${name ?? "world"}`, status: 200 });
-  console.log(`${request.method} ${request.url}`);
-}
+bootstrap({
+  configuration: {
+    port: PORT,
+    hostname: HOSTNAME,
+  },
+});
