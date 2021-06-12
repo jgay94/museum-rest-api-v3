@@ -34,9 +34,11 @@ const museumService = new MuseumService({ museumRepository });
 //   await museumService.findAll(),
 // );
 
-bootstrap({
-  configuration: {
-    port: PORT,
-    hostname: HOSTNAME,
-  },
-});
+if (import.meta.main) {
+  bootstrap({
+    configuration: {
+      port: PORT,
+      hostname: HOSTNAME,
+    },
+  });
+}
