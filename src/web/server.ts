@@ -1,21 +1,37 @@
-import { Application } from "oak";
+import { Application, Router } from "oak";
 import { green, white } from "fmt/colors.ts";
+import { IMuseumService } from "../museums/mod.ts";
 
 interface IBootstrapDependencies {
   configuration: {
     port: number;
     hostname: string;
   };
+  services: {
+    museums: IMuseumService;
+  };
 }
 
-export async function bootstrap(
-  { configuration: { port, hostname } }: IBootstrapDependencies,
-) {
+export async function bootstrap({
+  configuration: {
+    port,
+    hostname,
+  },
+  services: {
+    museums,
+  },
+}: IBootstrapDependencies) {
   const app = new Application();
+  const router = new Router({ prefix: "/v1" });
 
-  app.use((ctx) => {
-    ctx.response.body = "Hello world!";
+  router.get("/museums", async (ctx) => {
+    ctx.response.body = {
+      museums: await museums.findAll(),
+    };
   });
+
+  app.use(router.routes());
+  app.use(router.allowedMethods());
 
   app.addEventListener("error", (event) => {
     console.error("An error occurred: ", event.error);
