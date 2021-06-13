@@ -1,6 +1,7 @@
 import { Application, Router } from "oak/mod.ts";
 import { green, white } from "fmt/colors.ts";
 import { IMuseumService } from "../museums/mod.ts";
+import * as middleware from "./middleware/mod.ts";
 
 interface IBootstrapDependencies {
   configuration: {
@@ -30,8 +31,13 @@ export async function bootstrap({
     };
   });
 
-  app.use(router.routes());
-  app.use(router.allowedMethods());
+  app
+    .use(middleware.logger)
+    .use(middleware.responseTime);
+
+  app
+    .use(router.routes())
+    .use(router.allowedMethods());
 
   app.addEventListener("error", (event) => {
     console.error("An error occurred:", event.error);
