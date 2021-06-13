@@ -8,8 +8,8 @@ const museumRepository = new MuseumRepository();
 const museumService = new MuseumService({ museumRepository });
 
 /**
- * @route GET /v1/tasks
- * @description Get all tasks
+ * @route GET /v1/museums
+ * @description Get all museums
  */
 export async function getAll(ctx: RouterContext) {
   const museums = await museumService.findAll();
