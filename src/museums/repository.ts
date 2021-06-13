@@ -1,7 +1,7 @@
 // deno-lint-ignore-file require-await
 import { IMuseumRepository, Museum } from "./mod.ts";
 import { CreateMuseum } from "./types.ts";
-import { v4 as _uuid } from "uuid";
+import { v4 as _uuid } from "uuid/mod.ts";
 
 export class Repository implements IMuseumRepository {
   storage = new Map<string, Museum>();

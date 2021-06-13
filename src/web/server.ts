@@ -1,4 +1,4 @@
-import { Application, Router } from "oak";
+import { Application, Router } from "oak/mod.ts";
 import { green, white } from "fmt/colors.ts";
 import { IMuseumService } from "../museums/mod.ts";
 

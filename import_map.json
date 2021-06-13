@@ -1,8 +1,8 @@
 {
   "imports": {
-    "uuid": "https://deno.land/std/uuid/mod.ts",
+    "uuid/": "https://deno.land/std/uuid/",
     "http/": "https://deno.land/std/http/",
-    "oak": "https://deno.land/x/oak/mod.ts",
+    "oak/": "https://deno.land/x/oak/",
     "fmt/": "https://deno.land/std/fmt/"
   }
 }
