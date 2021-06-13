@@ -1,4 +1,5 @@
-import { serve, ServerRequest } from "http/server.ts";
+import { Application } from "oak";
+import { green, white } from "fmt/colors.ts";
 
 interface IBootstrapDependencies {
   configuration: {
@@ -10,24 +11,23 @@ interface IBootstrapDependencies {
 export async function bootstrap(
   { configuration: { port, hostname } }: IBootstrapDependencies,
 ) {
-  const server = serve({ port, hostname });
+  const app = new Application();
 
-  function handleMuseums(request: ServerRequest) {
-    request.respond({ body: JSON.stringify({ museums: [] }), status: 200 });
-  }
+  app.use((ctx) => {
+    ctx.response.body = "Hello world!";
+  });
 
-  console.log(`Server now running at http://${hostname}:${port}`);
+  app.addEventListener("error", (event) => {
+    console.error("An error occurred: ", event.error);
+  });
 
-  for await (const request of server) {
-    // const params = new URLSearchParams(request.url.substr(1));
-    // const name = params.get("name");
+  app.addEventListener("listen", ({ secure, hostname, port }) => {
+    const protocol = secure ? "https://" : "http://";
+    const url = `${protocol}${hostname ?? "localhost"}:${port}`;
+    console.log(
+      `${green("Listening on:")} ${white(url)}`,
+    );
+  });
 
-    if (request.url === "/api/museums" && request.method === "GET") {
-      handleMuseums(request);
-      continue;
-    }
-
-    // request.respond({ body: `Hello ${name ?? "world"}`, status: 200 });
-    console.log(`${request.method} ${request.url}`);
-  }
+  await app.listen({ port, hostname });
 }
