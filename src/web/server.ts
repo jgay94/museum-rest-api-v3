@@ -32,6 +32,7 @@ export async function bootstrap({
   });
 
   app
+    .use(middleware.errorHandler)
     .use(middleware.logger)
     .use(middleware.responseTime);
 
