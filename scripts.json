@@ -1,0 +1,23 @@
+{
+  "$schema": "https://deno.land/x/denon@2.4.7/schema.json",
+  "importmap": "import_map.json",
+  "lock": "lock.json",
+  "scripts": {
+    "dev": {
+      "desc": "start the server, fail if deps not cached.",
+      "cmd": "deno run --cached-only src/app.ts",
+      "watch": true,
+      "allow": [
+        "net"
+      ]
+    },
+    "lock": {
+      "desc": "Create/update lock file, use after adding deps.",
+      "cmd": "deno cache --lock-write src/app.ts"
+    },
+    "install": {
+      "desc": "download and cache deps, use after cloning project repo.",
+      "cmd": "deno cache --reload src/app.ts"
+    }
+  }
+}

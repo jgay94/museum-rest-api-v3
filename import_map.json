@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "uuid": "https://deno.land/std/uuid/mod.ts",
+    "http/": "https://deno.land/std/http/"
+  }
+}

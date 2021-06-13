@@ -1,5 +1,4 @@
-import * as http from "https://deno.land/std/http/server.ts";
-import { ServerRequest } from "https://deno.land/std/http/server.ts";
+import { serve, ServerRequest } from "http/server.ts";
 
 interface IBootstrapDependencies {
   configuration: {
@@ -11,7 +10,7 @@ interface IBootstrapDependencies {
 export async function bootstrap(
   { configuration: { port, hostname } }: IBootstrapDependencies,
 ) {
-  const server = http.serve({ port, hostname });
+  const server = serve({ port, hostname });
 
   function handleMuseums(request: ServerRequest) {
     request.respond({ body: JSON.stringify({ museums: [] }), status: 200 });
