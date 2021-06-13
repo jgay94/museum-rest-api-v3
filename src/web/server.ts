@@ -34,7 +34,7 @@ export async function bootstrap({
   app.use(router.allowedMethods());
 
   app.addEventListener("error", (event) => {
-    console.error("An error occurred: ", event.error);
+    console.error("An error occurred:", event.error);
   });
 
   app.addEventListener("listen", ({ secure, hostname, port }) => {
