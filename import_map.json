@@ -3,6 +3,7 @@
     "uuid/": "https://deno.land/std/uuid/",
     "http/": "https://deno.land/std/http/",
     "oak/": "https://deno.land/x/oak/",
-    "fmt/": "https://deno.land/std/fmt/"
+    "fmt/": "https://deno.land/std/fmt/",
+    "cors/": "https://deno.land/x/cors/"
   }
 }

@@ -2,12 +2,14 @@ import { Application, Router } from "oak/mod.ts";
 import { green, white } from "fmt/colors.ts";
 import { IMuseumService } from "../museums/mod.ts";
 import * as middleware from "./middleware/mod.ts";
+import { oakCors } from "cors/mod.ts";
 // import router from "./routes/router.ts";
 
 interface IBootstrapDependencies {
   configuration: {
     port: number;
     hostname: string;
+    allowedOrigins: string[];
   };
   services: {
     museums: IMuseumService;
@@ -18,6 +20,7 @@ export async function bootstrap({
   configuration: {
     port,
     hostname,
+    allowedOrigins,
   },
   services: {
     museums,
@@ -33,6 +36,10 @@ export async function bootstrap({
       museums: await museums.findAll(),
     };
   });
+
+  app.use(oakCors({
+    origin: allowedOrigins,
+  }));
 
   app
     .use(middleware.errorHandler)

@@ -35,6 +35,7 @@ if (import.meta.main) {
     configuration: {
       port: PORT,
       hostname: HOSTNAME,
+      allowedOrigins: ["http://localhost:3000"],
     },
     services: {
       museums: museumService,
