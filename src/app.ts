@@ -33,9 +33,14 @@ museumService.addOne({
 if (import.meta.main) {
   bootstrap({
     configuration: {
+      secure: true,
       port: PORT,
       hostname: HOSTNAME,
       allowedOrigins: ["http://localhost:3000"],
+      ssl: {
+        certFile: "./certificate.pem",
+        keyFile: "./key.pem",
+      },
     },
     services: {
       museums: museumService,

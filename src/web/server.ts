@@ -1,5 +1,5 @@
 import { Application, Router } from "oak/mod.ts";
-import { green, white } from "fmt/colors.ts";
+import { green, red, white } from "fmt/colors.ts";
 import { IMuseumService } from "../museums/mod.ts";
 import * as middleware from "./middleware/mod.ts";
 import { oakCors } from "cors/mod.ts";
@@ -7,9 +7,14 @@ import { oakCors } from "cors/mod.ts";
 
 interface IBootstrapDependencies {
   configuration: {
+    secure: boolean;
     port: number;
     hostname: string;
     allowedOrigins: string[];
+    ssl: {
+      certFile: string;
+      keyFile: string;
+    };
   };
   services: {
     museums: IMuseumService;
@@ -18,9 +23,14 @@ interface IBootstrapDependencies {
 
 export async function bootstrap({
   configuration: {
+    secure,
     port,
     hostname,
     allowedOrigins,
+    ssl: {
+      certFile,
+      keyFile,
+    },
   },
   services: {
     museums,
@@ -51,7 +61,7 @@ export async function bootstrap({
     .use(router.allowedMethods());
 
   app.addEventListener("error", (event) => {
-    console.error("An error occurred:", event.error);
+    console.error(`${red("An error occurred:")}`, event.error);
   });
 
   app.addEventListener("listen", ({ secure, hostname, port }) => {
@@ -62,5 +72,5 @@ export async function bootstrap({
     );
   });
 
-  await app.listen({ port, hostname });
+  await app.listen({ secure, port, hostname, certFile, keyFile });
 }

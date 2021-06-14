@@ -8,7 +8,8 @@
       "cmd": "deno run --cached-only src/app.ts",
       "watch": true,
       "allow": [
-        "net"
+        "net",
+        "read"
       ]
     },
     "lock": {
