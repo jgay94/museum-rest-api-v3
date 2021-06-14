@@ -2,7 +2,7 @@ import { Application, Router } from "oak/mod.ts";
 import { green, white } from "fmt/colors.ts";
 import { IMuseumService } from "../museums/mod.ts";
 import * as middleware from "./middleware/mod.ts";
-import router from "./routes/router.ts";
+// import router from "./routes/router.ts";
 
 interface IBootstrapDependencies {
   configuration: {
@@ -24,6 +24,15 @@ export async function bootstrap({
   },
 }: IBootstrapDependencies) {
   const app = new Application();
+  const router = new Router({
+    prefix: "/v1",
+  });
+
+  router.get("/museums", middleware.xTestHeader, async (ctx) => {
+    ctx.response.body = {
+      museums: await museums.findAll(),
+    };
+  });
 
   app
     .use(middleware.errorHandler)
