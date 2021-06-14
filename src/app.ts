@@ -1,11 +1,11 @@
 import { bootstrap } from "./web/server.ts";
+import { load as loadConfiguration } from "./config/mod.ts";
 import {
   Repository as MuseumRepository,
   Service as MuseumService,
 } from "./museums/mod.ts";
 
-const PORT = 8080;
-const HOSTNAME = "0.0.0.0";
+const config = await loadConfiguration();
 
 const museumRepository = new MuseumRepository();
 const museumService = new MuseumService({ museumRepository });
@@ -34,12 +34,12 @@ if (import.meta.main) {
   bootstrap({
     configuration: {
       secure: true,
-      port: PORT,
-      hostname: HOSTNAME,
-      allowedOrigins: ["http://localhost:3000"],
+      port: config.web.port,
+      hostname: config.web.hostname,
+      allowedOrigins: config.cors.allowedOrigins,
       ssl: {
-        certFile: "./certificate.pem",
-        keyFile: "./key.pem",
+        certFile: config.ssl.certificate,
+        keyFile: config.ssl.key,
       },
     },
     services: {

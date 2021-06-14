@@ -4,6 +4,7 @@
     "http/": "https://deno.land/std/http/",
     "oak/": "https://deno.land/x/oak/",
     "fmt/": "https://deno.land/std/fmt/",
-    "cors/": "https://deno.land/x/cors/"
+    "cors/": "https://deno.land/x/cors/",
+    "encoding/": "https://deno.land/std/encoding/"
   }
 }
